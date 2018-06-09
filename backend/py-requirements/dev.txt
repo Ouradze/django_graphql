@@ -1,0 +1,25 @@
+-r base.txt
+
+mock
+factory-boy
+
+prospector
+bandit
+
+pytest
+pytest-cov
+pytest-django
+pytest-pythonpath
+pytest-xdist
+
+ptpython==0.41
+
+# Linter
+flake8
+jedi
+pep8
+
+# Jupyter
+jupyter
+jupyterlab
+pyreadline

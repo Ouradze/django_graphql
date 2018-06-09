@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  backend:
+    env_file:
+    - ./env/dev.env
+    volumes:
+      - ./backend:/demo
+  frontend:
+    env_file:
+    - ./env/dev.env
+    volumes:
+      - ./frontend:/demo
+      - /demo/node_modules
