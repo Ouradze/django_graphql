@@ -162,11 +162,13 @@ STATIC_URL = '/static/'
 
 # Django Cors headers -> to change with dev and prod env
 CORS_ORIGIN_WHITELIST = (
+    '*',
     'localhost:8080',
     '0.0.0.0:8888',
     '127.0.0.1:9000',
 )
 CSRF_TRUSTED_ORIGINS = (
+    '*',
     'localhost:8080',
     '0.0.0.0:8888',
 )

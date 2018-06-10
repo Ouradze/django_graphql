@@ -58,9 +58,11 @@ class Queries(object):
 
         return None
 
+    @login_required
     def resolve_all_todos(self, info, **kwargs):
         return todo_models.Todo.objects.all()
 
+    @login_required
     def resolve_all_todo_lists(self, info, **kwargs):
         return todo_models.TodoList.objects.all()
 
