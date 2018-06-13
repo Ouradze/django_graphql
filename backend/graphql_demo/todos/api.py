@@ -5,9 +5,7 @@ from graphql_demo.todos import models
 
 def create_todo(description, todo_list, creator=None):
     return models.Todo.objects.create(
-        description=description,
-        creator=creator,
-        todolist=todo_list,
+        description=description, creator=creator, todolist=todo_list
     )
 
 
@@ -22,10 +20,7 @@ def update_todo(todo, description=None, finished=False):
 
 
 def create_todo_list(title, creator=None):
-    return models.TodoList.objects.create(
-        title=title,
-        creator=creator,
-    )
+    return models.TodoList.objects.create(title=title, creator=creator)
 
 
 def update_todo_list(todo_list, title=None, creator=None):

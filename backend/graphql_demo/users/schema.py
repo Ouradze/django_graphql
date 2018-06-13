@@ -2,7 +2,12 @@ import graphene
 
 from django.contrib.auth.models import User
 
-from graphene_django_extras import DjangoListObjectType, DjangoObjectType, DjangoFilterListField, DjangoSerializerMutation
+from graphene_django_extras import (
+    DjangoListObjectType,
+    DjangoObjectType,
+    DjangoFilterListField,
+    DjangoSerializerMutation,
+)
 from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
 
 import graphql_jwt
@@ -16,11 +21,11 @@ class UserType(DjangoObjectType):
         model = User
         description = " Type definition for a single user "
         filter_fields = {
-            'id': ['exact', ],
-            'first_name': ['icontains', 'iexact'],
-            'last_name': ['icontains', 'iexact'],
-            'username': ['icontains', 'iexact'],
-            'email': ['icontains', 'iexact']
+            "id": ["exact"],
+            "first_name": ["icontains", "iexact"],
+            "last_name": ["icontains", "iexact"],
+            "username": ["icontains", "iexact"],
+            "email": ["icontains", "iexact"],
         }
 
 
@@ -29,13 +34,16 @@ class UserListType(DjangoListObjectType):
         description = " Type definition for user list "
         model = User
         # ordering can be: string, tuple or list
-        pagination = LimitOffsetGraphqlPagination(default_limit=25, ordering="-username")
+        pagination = LimitOffsetGraphqlPagination(
+            default_limit=25, ordering="-username"
+        )
 
 
 class UserSerializerMutation(DjangoSerializerMutation):
     """
         DjangoSerializerMutation auto implement Create, Delete and Update functions
     """
+
     class Meta:
         description = " DRF serializer based Mutation for Users "
         serializer_class = users_serializers.UserSerializer
@@ -43,7 +51,9 @@ class UserSerializerMutation(DjangoSerializerMutation):
 
 class Queries(graphene.ObjectType):
     all_users = DjangoFilterListField(UserType)
-    user = UserListType.RetrieveField(description='User List with pagination and filtering')
+    user = UserListType.RetrieveField(
+        description="User List with pagination and filtering"
+    )
 
 
 class Mutations(graphene.ObjectType):

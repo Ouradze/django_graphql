@@ -7,7 +7,7 @@ from graphql_demo.users import schema as users_schema
 
 
 class RootQuery(todo_schema.Queries, users_schema.Queries, graphene.ObjectType):
-    debug = graphene.Field(DjangoDebug, name='__debug')
+    debug = graphene.Field(DjangoDebug, name="__debug")
 
 
 class RootMutations(todo_schema.Mutations, users_schema.Mutations, graphene.ObjectType):

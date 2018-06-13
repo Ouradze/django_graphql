@@ -8,10 +8,10 @@ class TodoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = todos_models.Todo
-        fields = ('description', 'created_at', 'creator', 'todolist', 'finished_at')
+        fields = ("description", "created_at", "creator", "todolist", "finished_at")
 
 
 class TodoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = todos_models.TodoList
-        fields = '__all__'
+        fields = "__all__"
