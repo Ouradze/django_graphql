@@ -14,7 +14,8 @@ class Todo(models.Model):
     description = models.CharField(max_length=256)
     created_at = models.DateField(auto_now=True)
     finished_at = models.DateField(null=True, blank=True)
-    creator = models.ForeignKey(
+    # tags = ManyToMany()
+    assigned_to = models.ForeignKey(
         User, null=True, related_name="todos", on_delete=models.CASCADE
     )
     todolist = models.ForeignKey(

@@ -97,7 +97,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "postgres",
         "USER": "postgres",
-        "HOST": "db",
+        "HOST": "postgres",
         "PORT": 5432,
     }
 }
@@ -119,13 +119,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
+# Channels configuration
+ASGI_APPLICATION = "graphql_demo.routing.application"
+# CHANNEL_LAYERS = {
+    # "default": {
+        # "BACKEND": "asgiref.inmemory.ChannelLayer",
+        # "ROUTING": "graphql_demo.routing.project_routing",  # Our project routing
+    # },
+# }
 
 # Graphene configuration
 GRAPHENE = {
     "SCHEMA": "graphql_demo.schema.schema",  # Where your Graphene schema lives
     "MIDDLEWARE": [
         "graphene_django.debug.DjangoDebugMiddleware",
-        "graphene_django_subscriptions.depromise_subscription",
+        # "graphene_django_subscriptions.depromise_subscription",
     ],
 }
 
@@ -150,8 +158,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 # Django Cors headers -> to change with dev and prod env
-CORS_ORIGIN_WHITELIST = ("*", "localhost:8080", "0.0.0.0:8888", "127.0.0.1:9000")
-CSRF_TRUSTED_ORIGINS = ("*", "localhost:8080", "0.0.0.0:8888")
+CORS_ORIGIN_WHITELIST = ("*", "localhost:8080", "0.0.0.0:800", "127.0.0.1:9000")
+CSRF_TRUSTED_ORIGINS = ("*", "localhost:8080", "0.0.0.0:8000")
 
 # Redis backend
 CACHES = {

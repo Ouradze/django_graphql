@@ -6,11 +6,11 @@ from graphene_django_extras import (
     DjangoInputObjectType,
 )
 
+from graphql_jwt.decorators import login_required
+
 from graphql_demo.todos import models as todo_models
 from graphql_demo.todos import serializers as todo_serializers
 from graphql_demo.todos import api as todo_api
-
-from graphql_jwt.decorators import login_required
 
 
 class TodoType(DjangoObjectType):
@@ -33,7 +33,7 @@ class TodoInputType(DjangoInputObjectType):
         model = todo_models.Todo
 
 
-class Queries(object):
+class Queries:
     todo = graphene.Field(TodoType, id=graphene.Int())
     all_todos = graphene.List(TodoType)
 
@@ -48,6 +48,7 @@ class Queries(object):
 
         return None
 
+    @login_required
     def resolve_todo_list(self, info, **kwargs):
         todo_list_id = kwargs.get("id")
 
@@ -87,16 +88,16 @@ class CreateTodo(graphene.Mutation):
 
     def mutate(self, info, *arg, **kwargs):
         user = info.context.user
-        creator = None
+        assigned_to = None
         if not user.is_anonymous:
-            creator = user
+            assigned_to = user
 
         todo = todo_api.create_todo(
             description=kwargs["new_todo"]["description"],
             todo_list=todo_models.TodoList.objects.get(
                 pk=kwargs["new_todo"]["todolist"]
             ),
-            creator=creator,
+            assigned_to=assigned_to,
         )
         ok = True
 
