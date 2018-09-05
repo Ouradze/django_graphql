@@ -1,0 +1,5 @@
+**/__pycache__/
+.git/
+.tox/
+.pytest_cache/
+.coverage.*

@@ -1,0 +1,61 @@
+[tool.black]
+line-length = 88
+py36 = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | docs
+)/
+'''
+
+[tool.poetry]
+name = "graphql-demo"
+version = "0.1.0"
+description = "GraphQL demonstration backend"
+authors = ["Mehdi Raddadi <me.raddadi@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+Django = "<2.0"
+django-filters = "<2.0.0"  # TODO(eclar): Unpin when graphen-django-extra compatible Django2
+django-redis = "^4.9"
+django-rq = "^1.1"
+django-partial-index = "^0.4.0"
+django-extensions = "^2.0"
+djangorestframework = "^3.8"
+django-cors-headers = "^2.2"
+pandas = "^0.23.1"
+scikit-learn = "^0.19.1"
+scipy = "^1.1"
+graphene-django = "^2.0"
+rq-scheduler = "^0.8.3"
+rq = "^0.11.0"
+raven = "^6.9"
+requests = "^2.19"
+psycopg2-binary = "^2.7"
+graphene-django-extras = "^0.3.7"
+django-graphql-jwt = "^0.1.10"
+graphene-django-subscriptions = "^0.0.4"
+channels = "^2.1"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.5"
+black = "^18.3-alpha.0"
+flake8 = "^3.5"
+jedi = "^0.12.0"
+jupyterlab = "^0.32.1"
+pytest-django = "^3.3"
+mock = "^2.0"
+pre-commit = "^1.10"
+flake8-isort = "^2.5"
+factory_boy = "^2.11"
+pylint = "^2.1"
+

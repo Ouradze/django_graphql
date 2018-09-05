@@ -4,23 +4,19 @@ FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /demo
+# Install poetry package manager
+RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 
 # Set working directory to project
 WORKDIR /demo
 
-# ADD requirements.txt /graphql-demo/
-COPY ./backend/ /demo/
+# ADD pyproject to /demo/
+COPY ./backend/pyproject.toml /demo/pyproject.toml
+COPY ./backend/pyproject.lock /demo/pyproject.lock
 
 # Install requirements
-RUN pip install pip -U
-
-RUN \
-    if [ "$PRODUCTION" = "True" ]; then \
-        pip install -r py-requirements/prod.txt; \
-    else \
-        pip install -r py-requirements/dev.txt \
-        && jupyter serverextension enable --py jupyterlab --sys-prefix;\
-    fi
+RUN poetry config settings.virtualenvs.create false
+RUN if [ "$PRODUCTION" = "True" ]; then poetry install --no-dev; else poetry install; fi
 
 COPY ./compose/backend/run_django.sh /
 
