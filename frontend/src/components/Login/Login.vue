@@ -1,26 +1,36 @@
 <template>
-  <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
-                <v-spacer></v-spacer>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text" v-model="username"></v-text-field>
-                  <v-text-field id="password" prepend-icon="lock" name="password" label="Password" type="password" v-model="password"></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login()">Login</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-  </v-container>
+  <div class="page-content">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--4-offset mdl-cell--4-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Login</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Mauris sagittis pellentesque lacus eleifend lacinia...
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="login" v-model="username">
+                <label class="mdl-textfield__label" for="sample1">Login...</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="password" id="pswd" v-model="password">
+                <label class="mdl-textfield__label" for="sample1">Password...</label>
+              </div>
+            </form>
+            <a
+              class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+              @click="login()">
+                Login
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -38,7 +48,6 @@ mutation($username:String!, $password:String!){
 export default {
   name: 'login',
   data: () => ({
-    drawer: null,
     username: '',
     password: '',
   }),
@@ -57,15 +66,15 @@ export default {
         },
       }).then((result) => {
         onLogin(this.$apolloProvider.defaultClient, result.data.tokenAuth.token);
+        localStorage.setItem('username', username);
+        this.$router.push(this.$route.query.redirect || '/');
       }).catch((error) => {
         console.log(error);
-        this.username = username;
-        this.password = password;
       });
     },
   },
 };
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 </style>

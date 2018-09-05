@@ -8,14 +8,17 @@ Vue.use(VueApollo);
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token';
 
+// Http endpoint
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || '/graphql/';
+
 // Config
 const defaultOptions = {
   // You can use `https` for secure connection (recommended in production)
-  httpEndpoint: process.env.VUE_APP_GRAPHQL_HTTP || 'http://0.0.0.0:8000/graphql/',
+  httpEndpoint,
   // You can use `wss` for secure connection (recommended in production)
   // Use `null` to disable subscriptions
+  // wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:4000/graphql',
   wsEndpoint: null,
-  // wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://0.0.0.0:8000/graphql',
   // LocalStorage token
   tokenName: AUTH_TOKEN,
   // Enable Automatic Query persisting with Apollo Engine
@@ -70,7 +73,9 @@ export function createProvider(options = {}) {
 
 // Manually call this when user log in
 export async function onLogin(apolloClient, token) {
-  localStorage.setItem(AUTH_TOKEN, token);
+  if (typeof localStorage !== 'undefined' && token) {
+    localStorage.setItem(AUTH_TOKEN, token);
+  }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
   try {
     await apolloClient.resetStore();
@@ -82,7 +87,10 @@ export async function onLogin(apolloClient, token) {
 
 // Manually call this when user log out
 export async function onLogout(apolloClient) {
-  localStorage.removeItem(AUTH_TOKEN);
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.removeItem('username');
+  }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
   try {
     await apolloClient.resetStore();

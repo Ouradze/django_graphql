@@ -28,6 +28,8 @@ services:
       dockerfile: ./compose/backend/Dockerfile
     ports:
       - "8000"
+    environment:
+      - JWT_AUTH_HEADER_PREFIX=Bearer
     depends_on:
       - postgres
     links:
